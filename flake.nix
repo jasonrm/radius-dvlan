@@ -14,13 +14,21 @@
     flake-utils,
     ...
   }:
-    flake-utils.lib.eachDefaultSystem (system: let
+    (flake-utils.lib.eachDefaultSystem (system: let
       pkgs = nixpkgs.legacyPackages.${system};
     in rec {
       packages = {
         radius-dvlan = pkgs.callPackage ./nix/derivation.nix {};
       };
       defaultPackage = packages.radius-dvlan;
+      devShells.default = pkgs.mkShell {
+        nativeBuildInputs = [pkgs.bashInteractive];
+        buildInputs = with pkgs; [
+          go
+        ];
+      };
+    }))
+    // {
       nixosModules = {
         radius-dvlan = {
           imports = [./nix/nixosModule.nix];
@@ -31,11 +39,5 @@
           ];
         };
       };
-      devShells.default = pkgs.mkShell {
-        nativeBuildInputs = [pkgs.bashInteractive];
-        buildInputs = with pkgs; [
-          go
-        ];
-      };
-    });
+    };
 }

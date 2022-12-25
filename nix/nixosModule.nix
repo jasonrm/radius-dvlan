@@ -15,11 +15,11 @@ in {
       config = lib.mkOption {
         type = lib.types.attrs;
         default = {
-            server = {
-                listen = "0.0.0.0:1812";
-                secret = "secret";
-                defaultVlan = 1;
-            };
+          server = {
+            listen = "0.0.0.0:1812";
+            secret = "secret";
+            defaultVlan = 1;
+          };
         };
       };
     };
@@ -31,10 +31,8 @@ in {
       description = "RADIUS server for MAC based dynamic VLAN assignment";
       serviceConfig = {
         ExecStart =
-          "${pkgs.radius-dvlan}/bin/radius-dvlan";
-#          + (lib.escapeShellArgs (
-#            ["--config" (writeText "config.json" (builtins.toJSON cfg.config))]
-#          ));
+          "${pkgs.radius-dvlan}/bin/radius-dvlan"
+          + (lib.escapeShellArgs ["--config" (writeText "config.json" (builtins.toJSON cfg.config))]);
       };
     };
   };
