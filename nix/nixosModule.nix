@@ -32,7 +32,7 @@ in {
       serviceConfig = {
         ExecStart =
           "${pkgs.radius-dvlan}/bin/radius-dvlan"
-          + (lib.escapeShellArgs ["--config" (writeText "config.json" (builtins.toJSON cfg.config))]);
+          + (lib.escapeShellArgs ["--config" (pkgs.writeText "config.json" (builtins.toJSON cfg.config))]);
       };
     };
   };
