@@ -6,13 +6,7 @@ buildGoModule rec {
   pname = "radius-dvlan";
   version = "1.0.0";
 
-  #  src = fetchFromGitHub {
-  #    owner = "jasonrm";
-  #    repo = "radius-dvlan";
-  #    rev = version;
-  #    hash = lib.fakeHash;
-  #  };
-  src = ./.;
+  src = ../.;
 
   subPackages = ["."];
 
