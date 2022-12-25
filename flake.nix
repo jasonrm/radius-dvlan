@@ -21,6 +21,16 @@
         radius-dvlan = pkgs.callPackage ./nix/derivation.nix {};
       };
       defaultPackage = packages.radius-dvlan;
+      nixosModules = {
+        radius-dvlan = {
+          imports = [./nix/nixosModule.nix];
+          nixpkgs.overlays = [
+            (final: prev: {
+              radius-dvlan = self.defaultPackage."${final.stdenv.hostPlatform.system}";
+            })
+          ];
+        };
+      };
       devShells.default = pkgs.mkShell {
         nativeBuildInputs = [pkgs.bashInteractive];
         buildInputs = with pkgs; [
