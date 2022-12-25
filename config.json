@@ -1,0 +1,39 @@
+{
+  "server": {
+    "listen": "0.0.0.0:1812",
+    "secret": "secret",
+    "defaultVlan": 1
+  },
+  "vlans": [
+    {
+      "name": "lab",
+      "id": 6
+    },
+    {
+      "name": "IoT",
+      "id": 14
+    }
+  ],
+  "clients": [
+    {
+      "name": "desktop",
+      "vlan": "lab",
+      "mac": "ab84aa99e810"
+    },
+    {
+      "name": "tv",
+      "vlan": "IoT",
+      "mac": "0xab84aa99e810"
+    },
+    {
+      "name": "laptop",
+      "vlan": "lab",
+      "mac": "cd-7a-25-4c-8e-09"
+    },
+    {
+      "name": "camera",
+      "vlan": "IoT",
+      "mac": "ef:ce:a1:c4:2a:9b"
+    }
+  ]
+}
