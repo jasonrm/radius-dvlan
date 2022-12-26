@@ -122,6 +122,7 @@ func boolToString(b bool) string {
 func normalizedMac(address string) string {
 	address = strings.Replace(address, "-", "", -1)
 	address = strings.Replace(address, ":", "", -1)
+	address = strings.Replace(address, ".", "", -1)
 	address = strings.ToLower(address)
 	if strings.HasPrefix(address, "0x") {
 		// Remove any hex prefix
