@@ -79,6 +79,7 @@ func main() {
 			var vlanId string
 			vlanId, vlanExists = vlanMap[client.Vlan]
 			if vlanExists {
+				vlanName = client.Vlan
 				assignedVlanId = vlanId
 			}
 		}
