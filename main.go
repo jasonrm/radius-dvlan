@@ -76,6 +76,7 @@ func main() {
 		var clientExists, vlanExists bool
 		client, clientExists = clientMap[username]
 		if clientExists {
+			assignedVlanId = client.Vlan
 			var vlanId string
 			vlanId, vlanExists = vlanMap[client.Vlan]
 			if vlanExists {
