@@ -84,19 +84,15 @@ func main() {
 			}
 		}
 
-		packet := r.Response(radius.CodeAccessAccept)
-		_ = rfc2868.TunnelType_Add(packet, 0, rfc3580.TunnelType_Value_VLAN)
-		_ = rfc2868.TunnelMediumType_Set(packet, 0, rfc2868.TunnelMediumType_Value_IEEE802)
-		_ = rfc2868.TunnelPrivateGroupID_Set(packet, 0, []byte(assignedVlanId))
+		log.Printf("client=%v username=%s vlanName=%s assignedVlanId=\"%s\"", r.RemoteAddr, username, vlanName, assignedVlanId)
 
-		log.Printf("client=%v username=%s vlan=%s vlanName=%s clientExists=%s vlanExists=%s",
-			r.RemoteAddr,
-			username,
-			assignedVlanId,
-			vlanName,
-			boolToString(clientExists),
-			boolToString(vlanExists),
-		)
+		packet := r.Response(radius.CodeAccessAccept)
+		vlanIds := strings.Fields(assignedVlanId)
+		for i, id := range vlanIds {
+			_ = rfc2868.TunnelType_Add(packet, byte(i)+1, rfc3580.TunnelType_Value_VLAN)
+			_ = rfc2868.TunnelMediumType_Add(packet, byte(i)+1, rfc2868.TunnelMediumType_Value_IEEE802)
+			_ = rfc2868.TunnelPrivateGroupID_Add(packet, byte(i)+1, []byte(id))
+		}
 
 		_ = w.Write(packet)
 	}
