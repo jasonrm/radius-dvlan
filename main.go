@@ -87,12 +87,9 @@ func main() {
 		log.Printf("client=%v username=%s vlanName=%s assignedVlanId=\"%s\"", r.RemoteAddr, username, vlanName, assignedVlanId)
 
 		packet := r.Response(radius.CodeAccessAccept)
-		vlanIds := strings.Fields(assignedVlanId)
-		for _, id := range vlanIds {
-			_ = rfc2868.TunnelType_Add(packet, 0, rfc3580.TunnelType_Value_VLAN)
-			_ = rfc2868.TunnelMediumType_Add(packet, 0, rfc2868.TunnelMediumType_Value_IEEE802)
-			_ = rfc2868.TunnelPrivateGroupID_Add(packet, 0, []byte(id))
-		}
+		_ = rfc2868.TunnelType_Add(packet, 0, rfc3580.TunnelType_Value_VLAN)
+		_ = rfc2868.TunnelMediumType_Add(packet, 0, rfc2868.TunnelMediumType_Value_IEEE802)
+		_ = rfc2868.TunnelPrivateGroupID_Add(packet, 0, []byte(assignedVlanId))
 
 		_ = w.Write(packet)
 	}
