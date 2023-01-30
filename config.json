@@ -2,16 +2,16 @@
   "server": {
     "listen": "0.0.0.0:1812",
     "secret": "secret",
-    "defaultVlan": 1
+    "defaultVlan": "1"
   },
   "vlans": [
     {
       "name": "lab",
-      "id": 6
+      "id": "6"
     },
     {
       "name": "IoT",
-      "id": 14
+      "id": "T:14, U:10"
     }
   ],
   "clients": [

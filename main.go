@@ -5,7 +5,6 @@ import (
 	"flag"
 	"io/ioutil"
 	"log"
-	"strconv"
 	"strings"
 
 	"layeh.com/radius"
@@ -17,12 +16,12 @@ import (
 type Server struct {
 	Listen      string
 	Secret      string
-	DefaultVlan int
+	DefaultVlan string
 }
 
 type Vlan struct {
 	Name string
-	Id   int
+	Id   string
 }
 
 type Client struct {
@@ -55,7 +54,7 @@ func main() {
 
 	var vlanMap = make(map[string]string)
 	for _, vlan := range config.Vlans {
-		vlanMap[vlan.Name] = strconv.Itoa(vlan.Id)
+		vlanMap[vlan.Name] = vlan.Id
 	}
 
 	var clientMap = make(map[string]Client)
@@ -63,7 +62,7 @@ func main() {
 		clientMap[normalizedMac(client.Mac)] = client
 	}
 
-	var defaultVlan = strconv.Itoa(config.Server.DefaultVlan)
+	var defaultVlan = config.Server.DefaultVlan
 	handler := func(w radius.ResponseWriter, r *radius.Request) {
 		username := rfc2865.UserName_GetString(r.Packet)
 		username = normalizedMac(username)
